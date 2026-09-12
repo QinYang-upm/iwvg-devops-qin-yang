@@ -46,4 +46,8 @@ public class UsersDatabase {
     public List<User> findAll() {
         return new ArrayList<>(users);
     }
+
+    public boolean deleteById(String id) {
+        return users.removeIf(user -> user.getId().equals(id));
+    }
 }

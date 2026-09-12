@@ -28,4 +28,8 @@ public class UserService {
                 .filter(user -> billable == null || user.isBillable() == billable)
                 .toList();
     }
+
+    public boolean deleteById(String id) {
+        return usersDatabase.deleteById(id);
+    }
 }
