@@ -12,14 +12,38 @@ public class UsersDatabase {
     private final List<User> users = new ArrayList<>();
 
     public UsersDatabase() {
-        // Initial data (seeder)
-        users.add(new User("1", "Aa", "Bb", "aa@gmail.com"));
-        users.add(new User("2", "Xx", "Yy", "xx@gmail.com"));
+        users.add(new User(
+                "1",
+                "Aa",
+                "Bb",
+                "aa@gmail.com",
+                "12345678A",
+                "Street 1",
+                "Madrid",
+                "Madrid",
+                "28001"
+        ));
+
+        users.add(new User(
+                "2",
+                "Xx",
+                "Yy",
+                "xx@gmail.com",
+                "",
+                "Street 2",
+                "Madrid",
+                "Madrid",
+                "28002"
+        ));
     }
 
     public Optional<User> findById(String id) {
         return users.stream()
                 .filter(user -> user.getId().equals(id))
                 .findFirst();
+    }
+
+    public List<User> findAll() {
+        return new ArrayList<>(users);
     }
 }
