@@ -45,4 +45,18 @@ class UserServiceTest {
     void testFindByIdNotFound() {
         assertThat(userService.findById("999")).isEmpty();
     }
+
+    @Test
+    void testUpdateActive() {
+        User user = userService.updateActive("1", false)
+                .orElseThrow();
+
+        assertThat(user.isActive()).isFalse();
+    }
+
+    @Test
+    void testUpdateActiveNotFound() {
+        assertThat(userService.updateActive("999", true))
+                .isEmpty();
+    }
 }
