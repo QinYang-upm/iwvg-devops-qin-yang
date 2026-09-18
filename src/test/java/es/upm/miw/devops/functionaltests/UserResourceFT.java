@@ -72,4 +72,32 @@ class UserResourceFT {
                 .exchange()
                 .expectStatus().isNotFound();
     }
+
+    @Test
+    void testSearchBillable() {
+        webTestClient.get()
+                .uri("/user?billable=true")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.length()").isEqualTo(1);
+    }
+    @Test
+    void testSearchNonBillable() {
+        webTestClient.get()
+                .uri("/user?billable=false")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.length()").isEqualTo(1);
+    }
+    @Test
+    void testSearchWithMultipleConditions() {
+        webTestClient.get()
+                .uri("/user?firstName=Aa&billable=true")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.length()").isEqualTo(1);
+    }
 }
