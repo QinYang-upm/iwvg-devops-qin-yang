@@ -31,4 +31,18 @@ class UserServiceTest {
 
         assertThat(deleted).isFalse();
     }
+
+    @Test
+    void testFindById() {
+        assertThat(userService.findById("1"))
+                .isPresent()
+                .get()
+                .extracting(User::getId)
+                .isEqualTo("1");
+    }
+
+    @Test
+    void testFindByIdNotFound() {
+        assertThat(userService.findById("999")).isEmpty();
+    }
 }
