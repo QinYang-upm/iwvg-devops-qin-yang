@@ -21,7 +21,8 @@ public class UsersDatabase {
                 "Street 1",
                 "Madrid",
                 "Madrid",
-                "28001"
+                "28001",
+                true
         ));
 
         users.add(new User(
@@ -33,7 +34,8 @@ public class UsersDatabase {
                 "Street 2",
                 "Madrid",
                 "Madrid",
-                "28002"
+                "28002",
+                false
         ));
     }
 
@@ -49,5 +51,13 @@ public class UsersDatabase {
 
     public boolean deleteById(String id) {
         return users.removeIf(user -> user.getId().equals(id));
+    }
+
+    public Optional<User> updateActive(String id, boolean active) {
+        return findById(id)
+                .map(user -> {
+                    user.setActive(active);
+                    return user;
+                });
     }
 }

@@ -14,6 +14,7 @@ public class User {
     private String city;
     private String province;
     private String postalCode;
+    private boolean active;
 
     public User() {
     }
@@ -27,7 +28,8 @@ public class User {
             String address,
             String city,
             String province,
-            String postalCode
+            String postalCode,
+            boolean active
     ) {
         this.id = id;
         this.firstName = firstName;
@@ -38,6 +40,7 @@ public class User {
         this.city = city;
         this.province = province;
         this.postalCode = postalCode;
+        this.active = active;
     }
 
     public String getId() {
@@ -89,5 +92,12 @@ public class User {
 
     private boolean hasContent(String value) {
         return value != null && !value.isBlank();
+    }
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

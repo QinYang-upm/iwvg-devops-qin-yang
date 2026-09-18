@@ -32,4 +32,8 @@ public class UserService {
     public boolean deleteById(String id) {
         return usersDatabase.deleteById(id);
     }
+    public Optional<User> updateActive(String id, boolean active) {
+        return usersDatabase.updateActive(id, active);
+    }
+
 }
