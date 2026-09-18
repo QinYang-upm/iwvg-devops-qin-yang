@@ -35,4 +35,22 @@ class UserResourceFT {
                 .exchange()
                 .expectStatus().isNotFound();
     }
+
+    @Test
+    void testFindById() {
+        webTestClient.get()
+                .uri("/user/1")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.id").isEqualTo("1");
+    }
+
+    @Test
+    void testFindByIdNotFound() {
+        webTestClient.get()
+                .uri("/user/999")
+                .exchange()
+                .expectStatus().isNotFound();
+    }
 }
