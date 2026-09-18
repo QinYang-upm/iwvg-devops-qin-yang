@@ -53,4 +53,23 @@ class UserResourceFT {
                 .exchange()
                 .expectStatus().isNotFound();
     }
+
+    @Test
+    void testUpdateActive() {
+        webTestClient.put()
+                .uri("/user/1/active?active=false")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.active").isEqualTo(false);
+    }
+
+
+    @Test
+    void testUpdateActiveNotFound() {
+        webTestClient.put()
+                .uri("/user/999/active?active=true")
+                .exchange()
+                .expectStatus().isNotFound();
+    }
 }
