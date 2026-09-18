@@ -68,7 +68,9 @@ jobs:
       # RENDER_DEPLOY_HOOK_TOKEN
 
       - name: 🚀 Deploy on Render
-        run: |
-          curl --fail -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}" \
-          && echo "✅ Deployment succeeded" \
-          || (echo "❌ Deployment failed" && exit 1)
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_TOKEN }}
+          run: |
+            curl --fail -X POST "$RENDER_DEPLOY_HOOK_TOKEN" \
+            && echo "☑️ Deployment succeeded" \
+            || (echo "❌ Deployment failed" && exit 1)
