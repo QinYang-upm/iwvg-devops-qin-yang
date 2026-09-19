@@ -80,7 +80,7 @@ jobs:
       - name: 📊 Sonar Analysis
         run: >
           mvn -B sonar:sonar
-          -Dsonar.projectKey=QinYang-upm_iwvg-devops-qin-yang_${{ env.ARTIFACT }}
+          -Dsonar.projectKey=QinYang-upm_iwvg-devops-qin-yang
           -Dsonar.organization=qinyang-upm
           -Dsonar.host.url=https://sonarcloud.io
           -Dsonar.token=${{ secrets.SONAR_TOKEN }}
