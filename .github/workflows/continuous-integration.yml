@@ -1,7 +1,10 @@
 name: CI
 on:
   push:
-    branches: [develop,release-*]
+    branches:
+      - develop
+      - staging
+      - main
 
 jobs:
   devops:
@@ -77,5 +80,6 @@ jobs:
           -Dsonar.organization=qinyang-upm
           -Dsonar.host.url=https://sonarcloud.io
           -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+          -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
