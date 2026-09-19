@@ -72,6 +72,10 @@ jobs:
         uses: github/codeql-action/analyze@v3
         with:
           category: "/language:java"
+      - name: 🔎 Check JaCoCo report
+        run: |
+          ls -l target/site/jacoco
+          test -f target/site/jacoco/jacoco.xml
 
       - name: 📊 Sonar Analysis
         run: >
