@@ -23,6 +23,8 @@ COPY --from=build /app/target/*.jar app.jar
    # Este contenedor escucha el puerto indicado
 EXPOSE 8080
    # Define un comando para cuando se inicialice el contenedor en el host: java -jar app.jar
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
+    CMD wget -q --spider http://localhost:8080/actuator/health || exit 1
 CMD ["java", "-jar", "app.jar"]
 
 
