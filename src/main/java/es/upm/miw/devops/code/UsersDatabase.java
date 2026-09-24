@@ -60,4 +60,12 @@ public class UsersDatabase {
                     return user;
                 });
     }
+
+    public Optional<User> update(String id, User user) {
+        return findById(id)
+                .map(existingUser -> {
+                    existingUser.updateFrom(user);
+                    return existingUser;
+                });
+    }
 }

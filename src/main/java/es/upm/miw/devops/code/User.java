@@ -100,4 +100,16 @@ public class User {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+    public void updateFrom(User user) {
+        this.firstName = user.firstName;
+        this.familyName = user.familyName;
+        this.email = user.email;
+        this.identity = user.identity;
+        this.address = user.address;
+        this.city = user.city;
+        this.province = user.province;
+        this.postalCode = user.postalCode;
+        this.active = user.active;
+    }
 }
