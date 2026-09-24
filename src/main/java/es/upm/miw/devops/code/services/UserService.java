@@ -1,11 +1,12 @@
 package es.upm.miw.devops.code.services;
 
 import es.upm.miw.devops.code.User;
+import es.upm.miw.devops.code.UserActiveUpdate;
 import es.upm.miw.devops.code.UsersDatabase;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -32,8 +33,19 @@ public class UserService {
     public boolean deleteById(String id) {
         return usersDatabase.deleteById(id);
     }
+
+    public Optional<User> update(String id, User user) {
+        return usersDatabase.update(id, user);
+    }
+
     public Optional<User> updateActive(String id, boolean active) {
         return usersDatabase.updateActive(id, active);
     }
 
+    public List<User> updateActive(List<UserActiveUpdate> updates) {
+        return updates.stream()
+                .map(update -> usersDatabase.updateActive(update.id(), update.active()))
+                .flatMap(Optional::stream)
+                .toList();
+    }
 }

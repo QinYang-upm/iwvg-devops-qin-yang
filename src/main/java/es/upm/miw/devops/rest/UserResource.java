@@ -1,15 +1,18 @@
 package es.upm.miw.devops.rest;
 
 import es.upm.miw.devops.code.User;
+import es.upm.miw.devops.code.UserActiveUpdate;
 import es.upm.miw.devops.code.services.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -46,6 +49,17 @@ public class UserResource {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> update(
+            @PathVariable String id,
+            @RequestBody User user
+    ) {
+        return userService.update(id, user)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @PutMapping("/{id}/active")
     public ResponseEntity<User> updateActive(
             @PathVariable String id,
@@ -54,5 +68,10 @@ public class UserResource {
         return userService.updateActive(id, active)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PatchMapping
+    public List<User> updateActive(@RequestBody List<UserActiveUpdate> updates) {
+        return userService.updateActive(updates);
     }
 }
