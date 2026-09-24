@@ -1,5 +1,6 @@
 package es.upm.miw.devops.functionaltests;
 
+import es.upm.miw.devops.code.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
@@ -102,4 +103,75 @@ class UserResourceFT {
                 .expectBody()
                 .jsonPath("$.length()").isEqualTo(1);
     }
+
+    @Test
+    void testUpdate() {
+        User request = new User(
+                "999",
+                "John",
+                "Smith",
+                "john.smith@gmail.com",
+                "87654321B",
+                "Street 10",
+                "Sevilla",
+                "Sevilla",
+                "41001",
+                false
+        );
+
+        webTestClient.put()
+                .uri("/user/1")
+                .bodyValue(request)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.id").isEqualTo("1")
+                .jsonPath("$.firstName").isEqualTo("John")
+                .jsonPath("$.familyName").isEqualTo("Smith")
+                .jsonPath("$.email").isEqualTo("john.smith@gmail.com")
+                .jsonPath("$.active").isEqualTo(false);
+
+        // Restore seeded user
+        User original = new User(
+                "1",
+                "Aa",
+                "Bb",
+                "aa@gmail.com",
+                "12345678A",
+                "Street 1",
+                "Madrid",
+                "Madrid",
+                "28001",
+                true
+        );
+
+        webTestClient.put()
+                .uri("/user/1")
+                .bodyValue(original)
+                .exchange()
+                .expectStatus().isOk();
+    }
+
+    @Test
+    void testUpdateNotFound() {
+        User request = new User(
+                "999",
+                "John",
+                "Smith",
+                "john.smith@gmail.com",
+                "87654321B",
+                "Street 10",
+                "Sevilla",
+                "Sevilla",
+                "41001",
+                false
+        );
+
+        webTestClient.put()
+                .uri("/user/999")
+                .bodyValue(request)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
 }
