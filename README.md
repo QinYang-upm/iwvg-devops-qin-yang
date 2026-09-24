@@ -11,7 +11,7 @@
 
 ### Estado del código
 
-[![Render broken](https://iwvg-devops-latest.onrender.com/version-badge)](https://iwvg-devops-latest.onrender.com/swagger-ui.html)
+[![CD AWS](https://img.shields.io/badge/CD-AWS%20Lightsail-orange)](http://35.42.62.18:8080/swagger-ui.html)
 [![CI](https://github.com/QinYang-upm/iwvg-devops-qin-yang/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/QinYang-upm/iwvg-devops-qin-yang/actions/workflows/continuous-integration.yml)
 [![Quality gate status](https://sonarcloud.io/api/project_badges/measure?project=QinYang-upm_iwvg-devops-qin-yang&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=QinYang-upm_iwvg-devops-qin-yang)
 
