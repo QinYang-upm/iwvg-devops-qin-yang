@@ -14,11 +14,13 @@ public class User {
     private String city;
     private String province;
     private String postalCode;
+    private String role;
     private boolean active;
 
     public User() {
     }
 
+    // Backward-compatible constructor
     public User(
             String id,
             String firstName,
@@ -31,6 +33,34 @@ public class User {
             String postalCode,
             boolean active
     ) {
+        this(
+                id,
+                firstName,
+                familyName,
+                email,
+                identity,
+                address,
+                city,
+                province,
+                postalCode,
+                "USER",
+                active
+        );
+    }
+
+    public User(
+            String id,
+            String firstName,
+            String familyName,
+            String email,
+            String identity,
+            String address,
+            String city,
+            String province,
+            String postalCode,
+            String role,
+            boolean active
+    ) {
         this.id = id;
         this.firstName = firstName;
         this.familyName = familyName;
@@ -40,6 +70,7 @@ public class User {
         this.city = city;
         this.province = province;
         this.postalCode = postalCode;
+        this.role = role;
         this.active = active;
     }
 
@@ -79,6 +110,10 @@ public class User {
         return postalCode;
     }
 
+    public String getRole() {
+        return role;
+    }
+
     public boolean isBillable() {
         return hasContent(firstName)
                 && hasContent(familyName)
@@ -93,12 +128,17 @@ public class User {
     private boolean hasContent(String value) {
         return value != null && !value.isBlank();
     }
+
     public boolean isActive() {
         return active;
     }
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public boolean isAdmin() {
+        return "ADMIN".equalsIgnoreCase(role);
     }
 
     public void updateFrom(User user) {

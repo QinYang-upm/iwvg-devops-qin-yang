@@ -62,11 +62,15 @@ class UserResourceFT {
     @Test
     void testUpdateActive() {
         webTestClient.put()
-                .uri("/user/1/active?active=false")
+                .uri(uriBuilder -> uriBuilder
+                        .path("/user/2/active")
+                        .queryParam("active", true)
+                        .build())
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
-                .jsonPath("$.active").isEqualTo(false);
+                .jsonPath("$.id").isEqualTo("2")
+                .jsonPath("$.active").isEqualTo(true);
     }
 
 
@@ -179,7 +183,7 @@ class UserResourceFT {
     @Test
     void testUpdateActiveList() {
         List<UserActiveUpdate> updates = List.of(
-                new UserActiveUpdate("1", false),
+                new UserActiveUpdate("1", true),
                 new UserActiveUpdate("2", true)
         );
 
@@ -190,7 +194,7 @@ class UserResourceFT {
                 .expectStatus().isOk()
                 .expectBody()
                 .jsonPath("$[0].id").isEqualTo("1")
-                .jsonPath("$[0].active").isEqualTo(false)
+                .jsonPath("$[0].active").isEqualTo(true)
                 .jsonPath("$[1].id").isEqualTo("2")
                 .jsonPath("$[1].active").isEqualTo(true);
 
@@ -205,6 +209,23 @@ class UserResourceFT {
                 .bodyValue(original)
                 .exchange()
                 .expectStatus().isOk();
+    }
+
+    @Test
+    void testAdminCannotBeDeactivated() {
+        List<UserActiveUpdate> updates = List.of(
+                new UserActiveUpdate("1", false)
+        );
+
+        webTestClient.patch()
+                .uri("/user")
+                .bodyValue(updates)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$[0].id").isEqualTo("1")
+                .jsonPath("$[0].role").isEqualTo("ADMIN")
+                .jsonPath("$[0].active").isEqualTo(true);
     }
 
 }
