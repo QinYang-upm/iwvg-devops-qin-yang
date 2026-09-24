@@ -2,7 +2,7 @@ name: CD-AWS
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   cd:
