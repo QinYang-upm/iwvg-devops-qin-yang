@@ -8,6 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import es.upm.miw.devops.code.UserActiveUpdate;
+import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
@@ -172,6 +174,37 @@ class UserResourceFT {
                 .bodyValue(request)
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testUpdateActiveList() {
+        List<UserActiveUpdate> updates = List.of(
+                new UserActiveUpdate("1", false),
+                new UserActiveUpdate("2", true)
+        );
+
+        webTestClient.patch()
+                .uri("/user")
+                .bodyValue(updates)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$[0].id").isEqualTo("1")
+                .jsonPath("$[0].active").isEqualTo(false)
+                .jsonPath("$[1].id").isEqualTo("2")
+                .jsonPath("$[1].active").isEqualTo(true);
+
+        // Restore seeded state
+        List<UserActiveUpdate> original = List.of(
+                new UserActiveUpdate("1", true),
+                new UserActiveUpdate("2", false)
+        );
+
+        webTestClient.patch()
+                .uri("/user")
+                .bodyValue(original)
+                .exchange()
+                .expectStatus().isOk();
     }
 
 }
