@@ -90,4 +90,51 @@ class UserServiceTest {
         assertThat(users)
                 .hasSize(1);
     }
+
+    @Test
+    void testUpdate() {
+        User request = new User(
+                "999",
+                "John",
+                "Smith",
+                "john.smith@gmail.com",
+                "87654321B",
+                "Street 10",
+                "Sevilla",
+                "Sevilla",
+                "41001",
+                false
+        );
+
+        User updated = userService.update("1", request).orElseThrow();
+
+        assertThat(updated.getId()).isEqualTo("1");
+        assertThat(updated.getFirstName()).isEqualTo("John");
+        assertThat(updated.getFamilyName()).isEqualTo("Smith");
+        assertThat(updated.getEmail()).isEqualTo("john.smith@gmail.com");
+        assertThat(updated.getIdentity()).isEqualTo("87654321B");
+        assertThat(updated.getAddress()).isEqualTo("Street 10");
+        assertThat(updated.getCity()).isEqualTo("Sevilla");
+        assertThat(updated.getProvince()).isEqualTo("Sevilla");
+        assertThat(updated.getPostalCode()).isEqualTo("41001");
+        assertThat(updated.isActive()).isFalse();
+    }
+
+    @Test
+    void testUpdateNotFound() {
+        User request = new User(
+                "999",
+                "John",
+                "Smith",
+                "john.smith@gmail.com",
+                "87654321B",
+                "Street 10",
+                "Sevilla",
+                "Sevilla",
+                "41001",
+                false
+        );
+
+        assertThat(userService.update("999", request)).isEmpty();
+    }
 }
