@@ -14,7 +14,7 @@
 
     <groupId>es.upm.miw</groupId>
     <artifactId>iwvg-devops-Yang-Qin</artifactId>
-    <version>6.1.0</version>
+    <version>6.2.0-RC1</version>
     <packaging>jar</packaging>
     <name>${project.groupId}.${project.artifactId}</name>
     <url>http://github.com/QinYang-upm/${project.artifactId}</url>
@@ -136,7 +136,7 @@
                     </execution>
                     <execution>
                         <id>default-report</id>
-                        <phase>verify</phase>
+                        <phase>post-integration-test</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>

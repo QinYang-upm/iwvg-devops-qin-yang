@@ -4,6 +4,8 @@ import es.upm.miw.devops.code.User;
 import es.upm.miw.devops.code.UsersDatabase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import es.upm.miw.devops.code.UserActiveUpdate;
+import java.util.List;
 
 import java.util.List;
 
@@ -89,5 +91,71 @@ class UserServiceTest {
 
         assertThat(users)
                 .hasSize(1);
+    }
+
+    @Test
+    void testUpdate() {
+        User request = new User(
+                "999",
+                "John",
+                "Smith",
+                "john.smith@gmail.com",
+                "87654321B",
+                "Street 10",
+                "Sevilla",
+                "Sevilla",
+                "41001",
+                false
+        );
+
+        User updated = userService.update("1", request).orElseThrow();
+
+        assertThat(updated.getId()).isEqualTo("1");
+        assertThat(updated.getFirstName()).isEqualTo("John");
+        assertThat(updated.getFamilyName()).isEqualTo("Smith");
+        assertThat(updated.getEmail()).isEqualTo("john.smith@gmail.com");
+        assertThat(updated.getIdentity()).isEqualTo("87654321B");
+        assertThat(updated.getAddress()).isEqualTo("Street 10");
+        assertThat(updated.getCity()).isEqualTo("Sevilla");
+        assertThat(updated.getProvince()).isEqualTo("Sevilla");
+        assertThat(updated.getPostalCode()).isEqualTo("41001");
+        assertThat(updated.isActive()).isFalse();
+    }
+
+    @Test
+    void testUpdateNotFound() {
+        User request = new User(
+                "999",
+                "John",
+                "Smith",
+                "john.smith@gmail.com",
+                "87654321B",
+                "Street 10",
+                "Sevilla",
+                "Sevilla",
+                "41001",
+                false
+        );
+
+        assertThat(userService.update("999", request)).isEmpty();
+    }
+
+    @Test
+    void testUpdateActiveList() {
+        List<UserActiveUpdate> updates = List.of(
+                new UserActiveUpdate("1", false),
+                new UserActiveUpdate("2", true)
+        );
+
+        List<User> updatedUsers = userService.updateActive(updates);
+
+        assertThat(updatedUsers).hasSize(2);
+        assertThat(updatedUsers.get(0).getId()).isEqualTo("1");
+        assertThat(updatedUsers.get(0).isActive()).isFalse();
+        assertThat(updatedUsers.get(0).getFirstName()).isEqualTo("Aa");
+
+        assertThat(updatedUsers.get(1).getId()).isEqualTo("2");
+        assertThat(updatedUsers.get(1).isActive()).isTrue();
+        assertThat(updatedUsers.get(1).getFirstName()).isEqualTo("Xx");
     }
 }

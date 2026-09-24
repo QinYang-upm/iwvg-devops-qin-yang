@@ -47,7 +47,7 @@ public class SystemResource {
                 middleLabel, label, middleLabel, label, middleValue, value, middleValue, value);
     }
 
-    @GetMapping
+    @GetMapping({"", "/system"})
     public String applicationInfo() {
         String appInfo = "{\"version\":\"" + this.artifact + "::" + this.version + "::" + this.build + "\"} <br> <br>";
         appInfo += "/version-badge <br><br>";
