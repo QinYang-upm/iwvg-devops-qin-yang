@@ -52,10 +52,10 @@ class UserServiceTest {
 
     @Test
     void testUpdateActive() {
-        User user = userService.updateActive("1", false)
-                .orElseThrow();
+        User updatedUser = userService.updateActive("2", true).orElseThrow();
 
-        assertThat(user.isActive()).isFalse();
+        assertThat(updatedUser.getId()).isEqualTo("2");
+        assertThat(updatedUser.isActive()).isTrue();
     }
 
     @Test
@@ -143,19 +143,27 @@ class UserServiceTest {
     @Test
     void testUpdateActiveList() {
         List<UserActiveUpdate> updates = List.of(
-                new UserActiveUpdate("1", false),
+                new UserActiveUpdate("1", true),
                 new UserActiveUpdate("2", true)
         );
 
         List<User> updatedUsers = userService.updateActive(updates);
 
         assertThat(updatedUsers).hasSize(2);
+
         assertThat(updatedUsers.get(0).getId()).isEqualTo("1");
-        assertThat(updatedUsers.get(0).isActive()).isFalse();
-        assertThat(updatedUsers.get(0).getFirstName()).isEqualTo("Aa");
+        assertThat(updatedUsers.get(0).isActive()).isTrue();
 
         assertThat(updatedUsers.get(1).getId()).isEqualTo("2");
         assertThat(updatedUsers.get(1).isActive()).isTrue();
-        assertThat(updatedUsers.get(1).getFirstName()).isEqualTo("Xx");
     }
+
+    @Test
+    void testAdminCannotBeDeactivated() {
+        User admin = userService.updateActive("1", false).orElseThrow();
+
+        assertThat(admin.getRole()).isEqualTo("ADMIN");
+        assertThat(admin.isActive()).isTrue();
+    }
+
 }
