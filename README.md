@@ -11,10 +11,17 @@
 
 ### Estado del código
 
-[![Render broken](https://iwvg-devops-latest.onrender.com/version-badge)](https://iwvg-devops-latest.onrender.com/swagger-ui.html)
+[![CD AWS](https://github.com/QinYang-upm/iwvg-devops-Yang-Qin/actions/workflows/cd-main.yml/badge.svg)](https://github.com/QinYang-upm/iwvg-devops-Yang-Qin/actions/workflows/cd-main.yml)
 [![CI](https://github.com/QinYang-upm/iwvg-devops-qin-yang/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/QinYang-upm/iwvg-devops-qin-yang/actions/workflows/continuous-integration.yml)
 [![Quality gate status](https://sonarcloud.io/api/project_badges/measure?project=QinYang-upm_iwvg-devops-qin-yang&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=QinYang-upm_iwvg-devops-qin-yang)
+### AWS Deployment
 
+[![AWS](https://img.shields.io/badge/AWS-Lightsail-orange?logo=amazonaws)](http://35.42.62.18:8080/actuator/health)
+
+Application deployed on AWS Lightsail:
+
+- Health: `http://35.42.62.18:8080/actuator/health`
+- Swagger: `http://35.42.62.18:8080/swagger-ui.html`
 ### Tecnologías necesarias
 `Java` `Maven` `GitHub` `GitHub Actions` `Sonarcloud` `Slack` `Spring-Boot` `GitHub Packages` `Docker` `OpenAPI`
 
