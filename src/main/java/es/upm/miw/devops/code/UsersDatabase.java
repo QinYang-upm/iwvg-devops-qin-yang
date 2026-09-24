@@ -22,6 +22,7 @@ public class UsersDatabase {
                 "Madrid",
                 "Madrid",
                 "28001",
+                "ADMIN",
                 true
         ));
 
@@ -35,6 +36,7 @@ public class UsersDatabase {
                 "Madrid",
                 "Madrid",
                 "28002",
+                "USER",
                 false
         ));
     }
@@ -53,19 +55,22 @@ public class UsersDatabase {
         return users.removeIf(user -> user.getId().equals(id));
     }
 
-    public Optional<User> updateActive(String id, boolean active) {
-        return findById(id)
-                .map(user -> {
-                    user.setActive(active);
-                    return user;
-                });
-    }
-
     public Optional<User> update(String id, User user) {
         return findById(id)
                 .map(existingUser -> {
                     existingUser.updateFrom(user);
                     return existingUser;
+                });
+    }
+
+    public Optional<User> updateActive(String id, boolean active) {
+        return findById(id)
+                .map(user -> {
+                    if (user.isAdmin() && !active) {
+                        return user;
+                    }
+                    user.setActive(active);
+                    return user;
                 });
     }
 }
